@@ -7,14 +7,20 @@ const doctorSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  status: {type: String, required: true, trim : true},
+  status: {
+    type: String,
+    enum :["Present", "Busy", "Not Available"], 
+    default: "Not Available",
+    required: true,
+    trim : true
+  },
   department: {type: String, enum: ['Cardiology', 'Neurology', 'Orthopedics', 'Pediatrics',
     'Dermatology', 'Radiology', 'Psychiatry', 'Ophthalmology'
   ],
     required :true
   },
   licenseNo: {type:String, required: true, trim : true} 
-})
+}, {timestamps: true})
 
 const Doctor = mongoose.model('Doctor', doctorSchema);
 
