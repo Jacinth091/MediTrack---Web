@@ -14,11 +14,7 @@ const doctorSchema = new mongoose.Schema({
     required: true,
     trim : true
   },
-  department: {type: String, enum: ['Cardiology', 'Neurology', 'Orthopedics', 'Pediatrics',
-    'Dermatology', 'Radiology', 'Psychiatry', 'Ophthalmology'
-  ],
-    required :true
-  },
+  department: {type: mongoose.Schema.Types.ObjectId, ref:'Department', required: true},
   licenseNo: {type:String, required: true, trim : true} 
 }, {timestamps: true})
 

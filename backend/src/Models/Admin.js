@@ -8,21 +8,8 @@ const adminSchema = new mongoose.Schema({
     required: true
   },
   permission : {type:String, enum: ["super-admin", "admin"], default: "admin", required: true},
-  department: { 
-    type: String, 
-    enum: [
-      'Administration',
-      'Human Resources',
-      'Finance',
-      'IT Department',
-      'Operations',
-      'Records Management',
-      'Procurement',
-      'Legal',
-      'Quality Assurance'
-    ],
-    required: true
-  },
+  department: {type: mongoose.Schema.Types.ObjectId, ref: 'Department', required: true},
+
 
 }, {timestamps: true})
 

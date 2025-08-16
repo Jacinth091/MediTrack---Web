@@ -16,36 +16,62 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  firstName:
+  personalDetails: {
+    firstName:
+    {
+      type:String,
+      required: true,
+    },
+    middleName: {
+      type:String,
+      required: false
+    },
+    lastName: {
+      type:String,
+      required: true,
+    },
+    dateOfBirth: {
+      type:Date,
+      required: true,
+    },
+    gender :{
+      type:String,
+      enum: ['male', 'female', 'other'],
+      required: true,
+    },
+    contactNumber: {
+      type:String,
+      required: true,
+    },
+  },
+  roleInfo :
   {
-    type:String,
-    required: true,
-  },
-  middleName: {
-    type:String,
-    required: false
-  },
-  lastName: {
-    type:String,
-    required: true,
-  },
-  dateOfBirth: {
-    type:Date,
-    required: true,
-  },
-  gender :{
-    type:String,
-    required: true,
-  },
-  contactNumber: {
-    type:String,
-    required: true,
-  },
-  role: {
-    type:String,
-    enum: ['admin', 'doctor', 'nurse', 'admin'],
-  }
+    role: {
+      type:String,
+      enum: ['nurse', 'doctor', 'staff', 'receptionist', 'admin'],
+      required: true
+    },
+    department: {type:mongoose.Schema.Types.ObjectId, ref: 'Department', required: true },
+    licenseNo: 
+    {
+      type:String,
+      unique:true,
+      required: function(){
+        return ['doctor', 'nurse'].includes(this.role)
+      }
+    },
+    permission: 
+    {
+      type:String, 
+      enum :['super', 'admin', 'basic'],
+      required:function() {
+        return this.role === 'admin'
+      },
+      default: 'basic'
+    }
   
+  },
+
 }, {timestamps: true}
 )
 
