@@ -55,9 +55,9 @@ const userSchema = new mongoose.Schema({
     licenseNo: 
     {
       type:String,
-      unique:true,
-      required: function(){
-        return ['doctor', 'nurse'].includes(this.role)
+      required: function() {
+        const role = this.roleInfo?.role;
+        return ['doctor', 'nurse'].includes(role);
       }
     },
     permission: 
@@ -75,6 +75,16 @@ const userSchema = new mongoose.Schema({
 }, {timestamps: true}
 )
 
+userSchema.index(
+  { "roleInfo.licenseNo": 1 },
+  { 
+    unique: true, 
+    partialFilterExpression: { 
+      "roleInfo.role": { $in: ["doctor", "nurse"] },
+      "roleInfo.licenseNo": { $exists: true, $nin: [null, ""] } 
+    } 
+  }
+);
 
 const User = mongoose.model('User', userSchema);
 
