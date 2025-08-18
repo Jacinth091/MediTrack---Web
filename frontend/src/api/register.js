@@ -1,5 +1,6 @@
 import axios from 'axios';
-import backendConnection from './backend';
+import { toast } from 'react-toastify';
+import backendConnection from './backend.js';
 
 export const register = async(formData) => {
   try {
@@ -13,14 +14,16 @@ export const register = async(formData) => {
       }
     ); 
     if(response.status === 201){
-      console.log("Success! : ", response.data.message)
+      toast.success(response.data.message)
       return true;
     }
     else {
       console.log("Error in getting data from Client: ", response.data.message);
+      toast.error(response.data.message)
     }
   } catch (error) {
     console.error("Error: ", error.response.data.message);
+    toast.error(error.response.data.message)
     return null;
   }
 } 
