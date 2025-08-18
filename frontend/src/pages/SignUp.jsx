@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
+import { register } from "../api/Authentication/authentication";
 import { fetchDepartmentData } from '../api/department';
-import { register } from '../api/register';
 import InputField from '../components/InputField';
 import SelectField from '../components/SelectField';
 
 export default function SignUp() {
-  const inputClasses = "w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-black";
-  const sectionClasses = "space-y-4 p-4 bg-[#3A5E74] rounded-xl text-left";
+    const inputClasses = "w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-black";
+    const sectionClasses = "space-y-4 p-4 bg-[#3A5E74] rounded-xl text-left";
   const [departmentOptions, setDepartmentOptions] = useState([]);
   const [allDepartments, setAllDepartments] = useState([]);
   const [formData, setFormData] = useState({
@@ -32,17 +32,6 @@ export default function SignUp() {
   const handleRoleChange = async(e) => {
     const selectedRole = e.target.value;
     setFormData({...formData, role: selectedRole})
-
-    // let selRole;
-    // switch(selectedRole){
-    //   case "doctor":selRole = "Doctor"; break;
-    //   case "nurse": selRole = "Nurse"; break;
-    //   case "receptionist": selRole = "Receptionist"; break;
-    //   case "staff": selRole = "Staff"; break;
-    //   case "admin": selRole = "Admin"; break;
-    //   default:
-    // }
-        
     if(!selectedRole) return;
 
     try {
@@ -60,10 +49,10 @@ export default function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault(); // stop page refresh
     try {
-      console.log("Formdata", formData)
+      // console.log("Formdata", formData)
       const data = await register(formData);
 
-      console.log("data: ", data);
+      // console.log("data: ", data);
       // console.log("Server says:", data);
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -83,7 +72,6 @@ export default function SignUp() {
 
   useEffect(() => {
     fetchData();
-
   }, [])
 
   return (
