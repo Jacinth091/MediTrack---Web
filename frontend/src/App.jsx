@@ -1,14 +1,14 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import LandingPage from './pages/LandingPage'
-import Login from './pages/Login'
-import Layout from './components/layout'
-import SignUp from './pages/SignUp'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css'
 import '@fontsource/poppins/400.css'; // Normal weight
 import '@fontsource/poppins/700.css'; // Bold weight
+import { useState } from 'react'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import './App.css'
+import Layout from './components/layout'
+import LandingPage from './pages/LandingPage'
+import Login from './pages/Login'
+import SignUp from './pages/SignUp'
 // Add other weights (300, 500, etc.) as needed
 
 function App() {
@@ -24,8 +24,10 @@ function App() {
                 <Route path="/login" element = {<Login/>}></Route>
                 <Route path="/signup" element = {<SignUp/>}></Route>
               </Route>
+              
             </Routes>
           </Router>
+          <ToastContainer position="top-right" autoClose={3000} />
       </div>
       
     </>
