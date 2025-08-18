@@ -145,4 +145,55 @@ export const registerUser = async(req, res) => {
 
 };
 
+export const loginUser = async (req, res) => {
 
+  const {username, password} = req.body;
+  try {
+    if(!username || !password){
+      return res.status(400).json({message: "Required Fields are missing!"})
+    }
+    const user = await User.findOne({username})
+    if(!user) return res.status(400).json({message:"Account not Found!"})
+    
+    const auth = await bcrypt.compare(password, user.password)
+    if(!auth){
+      return res.status(401).json({message: "Invalid Credentials"})
+    }
+    else{
+
+      const token = jwt.sign({id: user._id}, process.env.JWT_SECRET,
+        {expiresIn: '7d'}
+      );
+
+      res.cookie('token', token , {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+        maxAge: 7 * 24 * 60 * 60 * 1000
+      });
+
+      return res.status(200).json({
+        message: "Success!",
+        user: user
+      })
+    }
+  } catch (error) {
+    return res.status(500).json({message: "Internal Server Error!"});
+  }
+  
+};
+
+
+export const logoutUser = async (req,res) => {
+  try {
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+    });
+
+    return res.status(200).json({message: "User succesfully logged out!"});
+  } catch (error) {
+    return res.status(500).json({message: error.message})    
+  }
+}
