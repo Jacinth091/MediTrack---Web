@@ -1,5 +1,34 @@
 import mongoose from 'mongoose';
 
+const roleInfoSchema = new mongoose.Schema({
+  role: {
+    type: String,
+    enum: ['nurse', 'doctor', 'staff', 'receptionist', 'admin'],
+    required: true
+  },
+  department: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Department',
+    required: true
+  },
+  licenseNo: {
+    type: String,
+    required: function () {
+      // only required if doctor or nurse
+      return ['doctor', 'nurse'].includes(this.role);
+    }
+  },
+  permission: {
+    type: String,
+    enum: ['super', 'admin', 'basic'],
+    default: function () {
+      // auto-assign based on role
+      return this.role === 'admin' ? 'admin' : 'basic';
+    }
+  }
+});
+
+
 const userSchema = new mongoose.Schema({
 
   username: {
@@ -44,34 +73,7 @@ const userSchema = new mongoose.Schema({
       required: true,
     },
   },
-  roleInfo :
-  {
-    role: {
-      type:String,
-      enum: ['nurse', 'doctor', 'staff', 'receptionist', 'admin'],
-      required: true
-    },
-    department: {type:mongoose.Schema.Types.ObjectId, ref: 'Department', required: true },
-    licenseNo: 
-    {
-      type:String,
-      required: function() {
-        const role = this.roleInfo?.role;
-        return ['doctor', 'nurse'].includes(role);
-      }
-    },
-    permission: 
-    {
-      type:String, 
-      enum :['super', 'admin', 'basic'],
-      required:function() {
-        return this.role === 'admin'
-      },
-      default: 'basic'
-    }
-  
-  },
-
+  roleInfo : roleInfoSchema
 }, {timestamps: true}
 )
 

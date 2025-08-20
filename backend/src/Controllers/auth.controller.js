@@ -160,24 +160,40 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({message: "Invalid Credentials"})
     }
     else{
-
-      const token = jwt.sign({id: user._id}, process.env.JWT_SECRET,
-        {expiresIn: '7d'}
+      const token = jwt.sign({
+        id: user._id,
+        role: user.roleInfo.role,
+        permission: user.roleInfo.permission
+      }, process.env.JWT_SECRET,
+        {expiresIn: user.roleInfo.role === "admin" ? '3h' :
+        user.roleInfo.role === "doctor" ? '20h' :
+        user.roleInfo.role === "nurse" || user.roleInfo.role === "receptionist"  ? '15h' :
+        '1h'}
       );
 
-      res.cookie('token', token , {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-        maxAge: 7 * 24 * 60 * 60 * 1000
-      });
+
+      // console.log("HErrrrreee!");
+      // console.log("Token: ", token);
+
+      // res.cookie('token', token , {
+      //   httpOnly: true,
+      //   secure: process.env.NODE_ENV === 'production',
+      //   sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+      //   maxAge: user.roleInfo.role === "admin" ? 18_000_000 :
+      //   user.roleInfo.role === "doctor" ? 72_000_000 :
+      //   user.roleInfo.role === "nurse" || user.roleInfo.role === "receptionist"  ? 54_000_000 :
+      //   3_600_000
+      // });
 
       return res.status(200).json({
         message: "Success!",
-        user: user
+        permission: user.roleInfo.permission,
+        role: user.roleInfo.role,
+        token: token
       })
     }
   } catch (error) {
+    console.log("Error in Auth (Login): ", error);
     return res.status(500).json({message: "Internal Server Error!"});
   }
   
