@@ -3,6 +3,7 @@ import { register } from "../api/Authentication/authentication";
 import { fetchDepartmentData } from '../api/department';
 import InputField from '../components/InputField';
 import SelectField from '../components/SelectField';
+import { showToast } from '../utils/alertHelper';
 
 export default function SignUp() {
     const inputClasses = "w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-black";
@@ -33,28 +34,30 @@ export default function SignUp() {
     const selectedRole = e.target.value;
     setFormData({...formData, role: selectedRole})
     if(!selectedRole) return;
-
     try {
       const filtered = allDepartments
       .filter(d=> d.allowedRoles.includes(selectedRole) )
       .map(d=> ({id: d._id, name: d.name}))
       console.log("Filtered Departments: ", filtered)
-      setDepartmentOptions(filtered);
+      const capitalized = filtered.map(dept => ({
+        id: dept.id,
+        value: dept.name, 
+        name: dept.name.charAt(0).toUpperCase() + dept.name.slice(1) 
+      }));
+      setDepartmentOptions(capitalized);
     } catch (error) {
       console.error("Error in mapping department!");
     }
-
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // stop page refresh
     try {
-      // console.log("Formdata", formData)
+      console.log("Formdata", formData)
       const data = await register(formData);
-
-      // console.log("data: ", data);
-      // console.log("Server says:", data);
+      if(!data)showToast("error", "An error occurred");
     } catch (error) {
+      showToast("error", error);
       console.error("Error submitting form:", error);
     }
   };
@@ -66,8 +69,20 @@ export default function SignUp() {
     } catch (error) {
       console.error("Error in fetching Department Data: ", error);
     }
+  }
 
-
+  const handleRoleOptions = (username) => {
+    let roleOptions = ["Doctor", "Nurse", "Receptionist", "Staff"];
+    const isAdmin = /^[A-Za-z0-9]+-admin$/;
+    try {
+      if(isAdmin.test(username)){
+        roleOptions = ["Admin"];
+      }
+    } catch (error) {
+      console.error("Error in getting roles: ", error)
+    }
+    return roleOptions;
+    
   }
 
   useEffect(() => {
@@ -127,7 +142,7 @@ export default function SignUp() {
             />
           <SelectField 
             label="Position/Role" 
-            options={["Doctor", "Nurse", "Receptionist", "Staff"]} 
+            options={handleRoleOptions(formData.username)} 
             className={inputClasses}
             name="role"
             value={formData.role}

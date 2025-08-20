@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { login } from "../api/Authentication/authentication";
 import InputField from "../components/InputField";
+import { showToast } from "../utils/alertHelper";
 
 
 export default function Login() {
@@ -23,9 +23,21 @@ export default function Login() {
     try {
       const res = await login(formData);
       if(!res){
-        toast.error("Unsuccessful Login");
+        showToast('error', res.message)
       }
       else{
+        showToast("success", res.message)
+        console.log("Response: ", res)
+        if(res.permission === "basic"){
+          window.location.href = `/${res.role.toLowerCase()}/dashboard`
+          console.log(`/${res.role.toLowerCase()}/dashboard`)
+          // navigate(`/${res.role.toLowerCase()}/dashboard`);
+        }
+        else if(res.role === "admin" && res.permission === "admin"){
+          window.location.href = `/${res.role.toLowerCase()}/dashboard`
+          console.log(`/${res.role.toLowerCase()}/dashboard`)
+
+        }
         // proceed to another page or navigate chuchu
         // or make the client save the data to use it for later
 
