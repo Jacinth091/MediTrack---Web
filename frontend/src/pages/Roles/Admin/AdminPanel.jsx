@@ -1,4 +1,4 @@
-export default function Admin_Dashboard(){
+export default function AdminDashboard(){
  return(
   <div>
     Admin View

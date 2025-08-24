@@ -1,4 +1,4 @@
-export default function Staff_Dashboard(){
+export default function StaffDashboard(){
  return(
   <div>
     Staff View

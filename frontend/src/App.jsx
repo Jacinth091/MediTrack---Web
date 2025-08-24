@@ -1,5 +1,6 @@
 import '@fontsource/poppins/400.css'; // Normal weight
 import '@fontsource/poppins/700.css'; // Bold weight
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
@@ -9,17 +10,16 @@ import Layout from './components/layout';
 import LandingPage from './pages/LandingPage';
 import PageLayout from './pages/Layout/PageLayout';
 import Login from './pages/Login';
-import Admin_Dashboard from './pages/Roles/Admin/AdminPanel';
-import Doctor_Dashboard from './pages/Roles/Doctor/DoctorPanel';
-import Nurse_Dashboard from './pages/Roles/Nurse/NursePanel';
-import Receptionist_Dashboard from './pages/Roles/Receptionist/ReceptionistPanel';
-import Staff_Dashboard from './pages/Roles/Staff/StaffPanel';
+import AdminPanel from './pages/Roles/Admin/AdminPanel';
+import DoctorPanel from './pages/Roles/Doctor/DoctorPanel';
+import NursePanel from './pages/Roles/Nurse/NursePanel';
+import ReceptionistPanel from './pages/Roles/Receptionist/ReceptionistPanel';
+import StaffDashboard from './pages/Roles/Staff/StaffPanel';
 import SignUp from './pages/SignUp';
 // Add other weights (300, 500, etc.) as needed
 
 function App() {
   const [count, setCount] = useState(0)
-
   return (
     <>
       <div> 
@@ -32,20 +32,41 @@ function App() {
               </Route>
               
               <Route path='/admin/'  element= {<PageLayout/>}>
-                <Route path="dashboard" element = {<Admin_Dashboard/>}/>
-                <Route path="patients"></Route>
+                <Route path="dashboard" element = {<AdminPanel/>}/>
+                <Route path="user-management" element ={<LandingPage/>}></Route>
+                <Route path="role-management"></Route>
+                <Route path="logs"></Route>
+                <Route path="reports-analytics"></Route>
+                <Route path="settings"></Route>
               </Route>
+
               <Route path='/doctor/' element= {<PageLayout/>}>
-                <Route path="dashboard" element = {<Doctor_Dashboard/>}/>                
+                <Route path="dashboard" element = {<DoctorPanel/>}/>
+                <Route path="patients">
+                  <Route path="records"/>                
+                </Route>
+                <Route path="appointments"></Route>
+                <Route path="prescriptions"></Route>
               </Route>
               <Route path='/nurse/'>
-                <Route path="dashboard" element = {<Nurse_Dashboard/>}/>                
+                <Route path="dashboard" element = {<NursePanel/>}/>
+                <Route path="patients/">
+                  <Route path="records"/>                
+                </Route> 
+                <Route path="appointments"></Route>
               </Route>
               <Route path='/staff/'>
-                <Route path="dashboard" element = {<Staff_Dashboard/>}/>                
+                <Route path="dashboard" element = {<StaffDashboard/>}/>                
+                <Route path="patients/">
+                  <Route path="records"/>                
+                </Route> 
+                <Route path="inventory"/>                
               </Route>
               <Route path='/receptionist/'>
-                <Route path="dashboard" element = {<Receptionist_Dashboard/>}/>
+                <Route path="dashboard" element = {<ReceptionistPanel/>}/>
+                <Route path="patients/">
+                  <Route path="records"/>                
+                </Route>                
               </Route>
             </Routes>
 

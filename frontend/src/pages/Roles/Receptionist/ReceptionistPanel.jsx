@@ -1,4 +1,4 @@
-export default function Receptionist_Dashboard(){
+export default function ReceptionistDashboard(){
  return(
   <div>
     Receptionist View

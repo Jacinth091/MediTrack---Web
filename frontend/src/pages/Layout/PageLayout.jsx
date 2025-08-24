@@ -1,17 +1,21 @@
 // PageLayout.jsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
+import NavItemsConfig from "../../utils/NavItemsConfig";
 import AsideBar from "./AsideBar";
 
 const PageLayout = () => {
   const [isAsideOpen, setAsideOpen] = useState(true);
+  const [navItems, setNavItems] = useState([]);
+  const handleGetNavItems =() => {
+    const userRole = "admin";
+    const navItemsConfig = NavItemsConfig();
+    setNavItems(navItemsConfig[userRole] || [])
+  }
 
-  const navItems = [
-    { text: "Dashboard", icon: "fas fa-tachometer-alt", path: "dashboard" },
-    { text: "Patients", icon: "fas fa-users", path: "patients" },
-    { text: "Appointments", icon: "fas fa-calendar", path: "appointments" },
-    { text: "Reports", icon: "fas fa-file-alt", path: "reports" },
-  ];
+  useEffect(()=>{
+    handleGetNavItems();
+  }, [])
 
   return (
     <div className="min-h-screen flex">

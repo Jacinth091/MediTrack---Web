@@ -1,4 +1,4 @@
-export default function Doctor_Dashboard(){
+export default function DoctorDashboard(){
  return(
   <div>
     Doctor View

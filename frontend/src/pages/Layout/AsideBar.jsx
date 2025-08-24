@@ -1,45 +1,68 @@
-// AsideBar.jsx
-import { Link, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
-const AsideBar = ({ navItems, isAsideOpen, setAsideOpen }) => {
-  const location = useLocation();
+const AsideBar = ({ navItems,isAsideOpen, setAsideOpen }) => {
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
+  const sidebarRef = useRef();
+
+  // Track window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <aside
-      className={`fixed top-0 left-0 h-screen w-60 bg-gray-800 text-white shadow-lg transform 
-      ${isAsideOpen ? "translate-x-0" : "-translate-x-full"} 
-      transition-transform duration-300 z-50`}
-    >
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-700">
-        <h2 className="text-xl font-bold">MediTrack</h2>
+    <>
+      <AnimatePresence>
+        {(isAsideOpen || isDesktop) && (
+          <motion.aside
+            ref={sidebarRef}
+            initial={{ x: "-100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="w-[15rem] fixed z-50 top-0 left-0 bg-gray-800 text-white
+                       h-full flex flex-col gap-4 p-4 overflow-hidden lg:block"
+            aria-label="Sidebar Navigation"
+          >
+            <div className="flex items-center justify-between p-4 border-b border-gray-700">
+              <h2 className="font-bold">MediTrack</h2>
+              {!isDesktop && (
+                <button onClick={() => setAsideOpen(false)}>✕</button>
+              )}
+            </div>
+            {/* Sidebar Links */}
+            <nav className="mt-4 flex flex-col gap-2">
+              {navItems.map((item, index) => {
+                  const isActive = location.pathname.includes(item.path);
+                  return (
+                    <Link
+                      key={index}
+                      to={item.path}
+                      className={`flex items-center py-3 px-4 rounded-lg transition-colors duration-300 `}
+                    >
+                      <i className={item.icon}></i>
+                      <span>{item.text}</span>
+                    </Link>
+                  );
+                })}
+            </nav>
+          </motion.aside>
+        )}
+      </AnimatePresence>
+      {!isDesktop && !isAsideOpen && (
         <button
-          onClick={() => setAsideOpen(false)}
-          className="lg:hidden text-gray-400 hover:text-white"
+          onClick={() => setAsideOpen(true)}
+          className="fixed top-4 left-4 z-50 bg-[#074873] text-white p-2 rounded-md"
         >
-          <i className="fas fa-times"></i>
+          <i className="fas fa-bars"></i>
         </button>
-      </div>
-
-      {/* Nav Links */}
-      <nav className="mt-4">
-        {navItems.map((item, index) => {
-          const isActive = location.pathname.includes(item.path);
-          return (
-            <Link
-              key={index}
-              to={item.path}
-              className={`flex items-center gap-3 px-4 py-2 transition-colors
-                ${isActive ? "bg-gray-700 text-white" : "hover:bg-gray-700"}
-              `}
-            >
-              <i className={item.icon}></i>
-              <span>{item.text}</span>
-            </Link>
-          );
-        })}
-      </nav>
-    </aside>
+      )}
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-export default function Nurse_Dashboard(){
+export default function NurseDashboard(){
  return(
   <div>
     Nurse View
