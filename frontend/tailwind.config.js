@@ -1,14 +1,15 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-    "./public/index.html"
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Poppins", "sans-serif"], // Default sans-serif font
-        lobster: ["Lobster", "cursive"], // Custom Lobster font
+        sans: ["Poppins", "sans-serif"],  // Default sans-serif
+        lobster: ["Lobster", "cursive"],
+        "dancing-script": ["Dancing Script", "cursive"],
       },
     },
   },
