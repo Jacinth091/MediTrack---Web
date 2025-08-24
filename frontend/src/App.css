@@ -1,7 +1,9 @@
-
+/* In your main CSS file (e.g., index.css) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Lobster&family=Dancing+Script:wght@400;700&display=swap');
 #root {
   text-align: center;
 }
+
 /* 
 .logo {
   height: 6em;
