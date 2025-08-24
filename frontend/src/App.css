@@ -1,10 +1,10 @@
+/* In your main CSS file (e.g., index.css) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Lobster&family=Dancing+Script:wght@400;700&display=swap');
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
+/* 
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -39,4 +39,4 @@
 
 .read-the-docs {
   color: #888;
-}
+} */
