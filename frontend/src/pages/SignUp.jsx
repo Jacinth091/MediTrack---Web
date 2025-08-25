@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { register } from "../api/Authentication/authentication";
 import { fetchDepartmentData } from '../api/department';
+import { motion } from 'framer-motion';
 import InputField from '../components/InputField';
 import SelectField from '../components/SelectField';
 import { showToast } from '../utils/alertHelper';
@@ -8,6 +9,33 @@ import { showToast } from '../utils/alertHelper';
 export default function SignUp() {
     const inputClasses = "w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-black";
     const sectionClasses = "space-y-4 p-4 bg-[#3A5E74] rounded-xl text-left";
+
+const containerVariants = {
+  initial: { x: '0vw', opacity: 0 },
+  animate: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      type: "tween",
+        ease: "linear", 
+      duration: 0.7,
+      delay: 0 // no delay
+    }
+  }
+};
+  const secondVariants = {
+    initial: { y: '-0.5vw', opacity: 0 }, 
+    animate: { 
+      y: 0, 
+      opacity: 1,
+      transition: {
+        type: 'tween', 
+        ease: "linear", 
+        duration: 0.35  
+      }
+    }
+  };  
+
   const [departmentOptions, setDepartmentOptions] = useState([]);
   const [allDepartments, setAllDepartments] = useState([]);
   const [formData, setFormData] = useState({
@@ -90,13 +118,94 @@ export default function SignUp() {
   }, [])
 
   return (
-    <div className='flex flex-col items-center bg-black min-h-screen text-white p-4 space-y-6'>
-      <form
+    <div className='flex flex-col justify-center items-center min-h-[85vh]   text-black '>
+   
+      <div className=" flex flex-col items-center justify-center p-4">
+        <motion.h1 className="text-3xl font-bold text-gray-800 mb-2"
+              initial="initial"
+              animate="animate"
+              variants={secondVariants}
+        >Choose your role to register</motion.h1>
+        <motion.p className="text-gray-600 mb-8"
+            initial="initial"
+              animate="animate"
+              variants={containerVariants}
+        >Select the role that best describes your position</motion.p>
+        
+        <motion.div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 s"
+                    initial="initial"
+                animate="animate"
+                variants={secondVariants}
+        >
+        {/* Nurse Card */}
+         <div class="relative p-[2px] rounded-xl bg-gradient-to-r from-[#E1BF36] to-[#336795] hover:shadow-xl duration-300 cursor-pointer hover:scale-105 ">
+            <div className="flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-lg  duration-300">
+              <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mb-4">
+                <img src="./images/nurse.png" alt=""
+                className='p-3' />
+              </div>
+              <span className="font-semibold text-center text-xl text-gray-800">Nurse</span>
+              <p className="text-gray-600 text-sm mt-2 text-center">Medical care and patient support</p>
+            </div>
+          </div>
+     
+        {/* Doctor Card */}
+         <div class="relative p-[2px] rounded-xl bg-gradient-to-r from-[#E1BF36] to-[#336795] hover:shadow-xl duration-300 cursor-pointer hover:scale-105 ">
+            <motion.div className="flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-lg  duration-300 ">
+              <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4m8-8v16m6-8a6 6 0 01-6 6 6 6 0 01-6-6" />
+                </svg>
+              </div>
+              <span className="font-semibold text-center text-xl text-gray-800"> Doctor</span>
+              <p className="text-gray-600 text-sm mt-2 text-center">Medical diagnosis and treatment</p>
+            </motion.div>
+          </div>
+       
+          {/* Staff Card */}
+          <div class="relative p-[2px] rounded-xl bg-gradient-to-r from-[#E1BF36] to-[#336795] hover:shadow-xl duration-300 cursor-pointer hover:scale-105 ">
+            <motion.div className="flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-lg duration-300 ">
+              <div className="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <span className="font-semibold text-center text-xl text-gray-800">Staff</span>
+              <p className="text-gray-600 text-sm mt-2 text-center">Administrative and support personnel</p>
+            </motion.div>
+          </div>
+        
+
+       
+          {/* Receptionist Card */}
+           <div class="relative p-[2px] rounded-xl bg-gradient-to-r from-[#E1BF36] to-[#336795] hover:shadow-xl duration-300 cursor-pointer hover:scale-105 ">
+            <motion.div className="flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-lg duration-300 ">
+              <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+              <span className="font-semibold text-center text-xl text-gray-800">Receptionist</span>
+              <p className="text-gray-600 text-sm mt-2 text-center">Front desk and appointment management</p>
+            </motion.div>
+           </div>
+          
+        </motion.div>
+
+            <motion.div className="mt-12 text-center max-w-2xl"
+                initial="initial"
+              animate="animate"
+              variants={containerVariants}
+            >
+              <p className="text-gray-600">Not sure which role to select? Contact your administrator for assistance.</p>
+            </motion.div>
+      </div>
+      {/* <form
         onSubmit={handleSubmit}
       >
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-4xl'>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-4xl'> */}
         {/* Personal Info Section */}
-        <div className={sectionClasses}>
+        {/* <div className={sectionClasses}>
           <InputField 
             label="Last Name" 
             type="text" 
@@ -148,10 +257,10 @@ export default function SignUp() {
             value={formData.role}
             onChange={handleRoleChange} 
           />
-        </div>
+        </div> */}
 
         {/* Contact & Auth Section */}
-        <div className={sectionClasses}>
+        {/* <div className={sectionClasses}>
           <InputField 
             label="Contact Number" 
             type="tel" 
@@ -181,8 +290,8 @@ export default function SignUp() {
             value={formData.department}
             onChange={handleChange} 
           />
-        </div>
-
+        </div> */}
+{/* 
         <div className={sectionClasses}>
           <InputField 
             label="Username" 
@@ -217,16 +326,16 @@ export default function SignUp() {
             onChange={handleChange}
             />
         </div>
-      </div>
+      </div> */}
 
-      <button 
+      {/* <button 
         className="bg-blue-500 hover:bg-blue-600 rounded-md px-6 py-2 cursor-pointer transition"
         type='submit'
         >
         Register
       </button>
 
-      </form>
+      </form> */}
 
     </div>
   )
