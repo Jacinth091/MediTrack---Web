@@ -5,6 +5,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import HeartBeat from '../components/HeartBeat';
 import { motion } from 'framer-motion';
+import Stepper,{Step} from '../components/Stepper';
 import DarkVeil from '../components/DarkVeil';
 
 export default function LandingPage() {
