@@ -33,7 +33,7 @@ export const createPatient = async(req,res) =>{
     maritalStatus,
     occupation,
   } = req.body;
-  const { city, province, zipCode, country } = address || {}; 
+  const { street, city, province, zipCode, country } = address || {}; 
   try{
     
     if(!firstName?.trim() || !lastName?.trim()){
@@ -76,6 +76,9 @@ export const createPatient = async(req,res) =>{
     // Address Validations
     if(!city?.trim() || !province?.trim()){
       return res.status(400).json({message: "Bad Request. Required address fields are missing!"})
+    }
+    if(!street?.trim()){
+      return res.status(400).json({message: "Bad Request. Street field is missing!"})
     }
     if(!country?.trim()){
       country = "Philippines"
@@ -155,6 +158,7 @@ export const createPatient = async(req,res) =>{
       alternatePhone: alternateContactNumber ? alternateContactNumber.trim() : '',
       email,
       address: {
+        street:street.trim(),
         city: city.trim(),
         province: province.trim(), // Note: your schema uses 'state', not 'province'
         zipCode: zipCode.trim(),

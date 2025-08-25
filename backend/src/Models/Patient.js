@@ -54,6 +54,7 @@ const patientSchema = new mongoose.Schema({
       match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/ // Email validation
     },
     address: {
+      street: { type: String, required: true },
       city: { type: String, required: true },
       province: { type: String, required: true },
       zipCode: String,

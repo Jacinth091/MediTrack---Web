@@ -1,5 +1,6 @@
 import { Check, Eye, EyeOff, Heart, Mail, MapPin, RefreshCw, Save, User } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import { addPatient } from '../api/patient';
 import InputField from '../components/InputField';
 import SelectField from '../components/SelectField';
 const DEFAULT_DATA = {
@@ -133,7 +134,8 @@ export default function AddPatient() {
 
     if (validateForm()) {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // await new Promise(resolve => setTimeout(resolve, 1000));
+      await addPatient(form);
       setSubmitted(true);
       setShowPreview(true);
     }
