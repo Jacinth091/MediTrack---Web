@@ -8,7 +8,7 @@ const PageLayout = () => {
   const [isAsideOpen, setAsideOpen] = useState(true);
   const [navItems, setNavItems] = useState([]);
   const handleGetNavItems =() => {
-    const userRole = "nurse";
+    const userRole = "admin";
     const navItemsConfig = NavItemsConfig();
     setNavItems(navItemsConfig[userRole] || [])
   }

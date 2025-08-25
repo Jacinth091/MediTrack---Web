@@ -7,7 +7,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import './App.css';
 import Layout from './components/layout';
-import AddPatient from './pages/AddPatient';
 import LandingPage from './pages/LandingPage';
 import PageLayout from './pages/Layout/PageLayout';
 import Login from './pages/Login';
@@ -40,11 +39,11 @@ function App() {
                 <Route path="reports-analytics"></Route>
                 <Route path="settings"></Route>
               </Route>
+
               <Route path='/doctor/' element= {<PageLayout/>}>
                 <Route path="dashboard" element = {<DoctorPanel/>}/>
                 <Route path="patients">
-                  <Route path="records"/>
-
+                  <Route path="records"/>                
                 </Route>
                 <Route path="appointments"></Route>
                 <Route path="prescriptions"></Route>
@@ -66,11 +65,8 @@ function App() {
               <Route path='/receptionist/'>
                 <Route path="dashboard" element = {<ReceptionistPanel/>}/>
                 <Route path="patients/">
-                  <Route path="records/"/>
-                  <Route path="add-patient" element ={<AddPatient/>}/>"
-                </Route>   
-                <Route path="add-patient" element ={<AddPatient/>}/>"
-
+                  <Route path="records"/>                
+                </Route>                
               </Route>
             </Routes>
 
