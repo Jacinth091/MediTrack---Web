@@ -1,8 +1,24 @@
 import { FileSearch, Home, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Context/AuthProvider';
 
 const NotFound = () => {
+  const {user, logout} = useAuth();
   const navigate = useNavigate();
+
+  const handleGoHome = async() =>{
+    try {
+      if(user?.role){
+        navigate(`/${user?.role.toLowerCase()}/dashboard`)
+      }
+      else{
+        await logout()
+        navigate('/')
+      }
+    } catch (error) {
+      console.error("Error in navigating to dashboard: ", error)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50 flex items-center justify-center px-4">
@@ -31,7 +47,7 @@ const NotFound = () => {
 
         <div className="space-y-3">
           <button
-            onClick={() => navigate('/')}
+            onClick={handleGoHome}
             className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center"
           >
             <Home className="w-5 h-5 mr-2" />

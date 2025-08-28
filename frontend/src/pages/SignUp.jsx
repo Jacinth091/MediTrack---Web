@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { register } from "../api/Authentication/authentication";
 import { fetchDepartmentData } from '../api/department';
-import { motion } from 'framer-motion';
 import InputField from '../components/InputField';
 import SelectField from '../components/SelectField';
+import Stepper, { Step } from '../components/Stepper';
 import { showToast } from '../utils/alertHelper';
-import Role from './Role';
-import Stepper,{Step} from '../components/Stepper';
 
 export default function SignUp() {
     const inputClasses = "w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-black";
@@ -57,6 +55,7 @@ const containerVariants = {
     role: "",
 
   })
+  const [parsedData, setParsedData] = useState({})
   const handleChange = async (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -69,6 +68,7 @@ const containerVariants = {
       const filtered = allDepartments
       .filter(d=> d.allowedRoles.includes(selectedRole) )
       .map(d=> ({id: d._id, name: d.name}))
+      console.log(selectedRole)
       console.log("Filtered Departments: ", filtered)
       const capitalized = filtered.map(dept => ({
         id: dept.id,
@@ -85,7 +85,26 @@ const containerVariants = {
     e.preventDefault(); // stop page refresh
     try {
       console.log("Formdata", formData)
-      const data = await register(formData);
+      const parsedGender = formData.gender.toLowerCase();
+      const parsedRole = formData.role.toLowerCase();
+
+      setParsedData({
+        username: formData.username,
+        password: formData.password,
+        email: formData.email,
+        firstName : formData.firstName,
+        lastName: formData.lastName,
+        middleName: formData.middleName || '' ,
+        dateOfBirth: formData.dateOfBirth,
+        gender: parsedGender,
+        contactNumber: formData.contactNumber,
+        licenseNo: formData.licenseNo | '',
+        department: formData.department,
+        role: parsedRole,
+      })
+
+      console.log("Parsed Form Data: ", parsedData)
+      const data = await register(parsedData);
       if(!data)showToast("error", "An error occurred");
     } catch (error) {
       showToast("error", error);
@@ -97,13 +116,14 @@ const containerVariants = {
     try {
       const allDepts = await fetchDepartmentData();
       setAllDepartments(allDepts)
+      console.log(allDepts)
     } catch (error) {
       console.error("Error in fetching Department Data: ", error);
     }
   }
 
   const handleRoleOptions = (username) => {
-    let roleOptions = ["Doctor", "Nurse", "Receptionist", "Staff"];
+    let roleOptions = ["doctor", "nurse", "receptionist", "staff"];
     const isAdmin = /^[A-Za-z0-9]+-admin$/;
     try {
       if(isAdmin.test(username)){
@@ -180,7 +200,7 @@ const containerVariants = {
               />
               <SelectField 
                 label="Gender" 
-                options={["", "Male", "Female"]} 
+                options={["Male", "Female"]} 
                 className={inputClasses}
                 name="gender"
                 value={formData.gender}
@@ -225,7 +245,7 @@ const containerVariants = {
             <div>
               <SelectField 
                 label="Department" 
-                options={["", ...departmentOptions.map(d => d.name)]} 
+                options={[...departmentOptions.map(d => d.name)]} 
                 className={inputClasses}
                 name="department"
                 value={formData.department}
@@ -234,7 +254,7 @@ const containerVariants = {
               />
             </div>
           </Step>
-                     <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
 
           <Step>
             <div>

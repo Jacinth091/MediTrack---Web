@@ -1,11 +1,20 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from '../../Context/AuthProvider';
 
 const AsideBar = ({ navItems,isAsideOpen, setAsideOpen, userRole }) => {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
   const sidebarRef = useRef();
+  const {logout} = useAuth();
 
+  const handleLogout = async ()=>{
+    try {
+      await logout();
+    } catch (error) {
+      console.log("Logout Failed!: ", error)
+    }
+  }
   // Track window resize
   useEffect(() => {
     const handleResize = () => {
@@ -14,7 +23,6 @@ const AsideBar = ({ navItems,isAsideOpen, setAsideOpen, userRole }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  console.log(userRole)
   return (
     <>
       <AnimatePresence>
@@ -51,6 +59,9 @@ const AsideBar = ({ navItems,isAsideOpen, setAsideOpen, userRole }) => {
                   );
                 })}
             </nav>
+            <button onClick={handleLogout}>
+                Logout
+            </button>
           </motion.aside>
         )}
       </AnimatePresence>
