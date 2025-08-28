@@ -5,6 +5,7 @@ import express from 'express';
 import DepartmentRoute from '../src/Routes/department.route.js';
 import AuthRoute from './Routes/auth.route.js';
 import Patientroute from './Routes/patient.route.js';
+import UserRoute from './Routes/user.route.js'
 import { connectDB } from './config/db.js';
 
 
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use('/api', DepartmentRoute)
 app.use('/api/patient',Patientroute);
 app.use('/api/auth', AuthRoute)
+app.use('/api/user', UserRoute)
 // app.use('/api', LoginRoute)
 
 app.listen(PORT, () => {
