@@ -1,11 +1,30 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const containerVariants = {
+  initial: { y: '-1vw', opacity: 0 },
+  animate: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "tween",
+        ease: "linear", 
+      duration: 0.5,
+      delay: 0 // no delay
+    }
+  }
+};
+
   return (
-    <nav className="min-h-[10vh] w-full bg-white text-black flex justify-between items-center shadow-md px-4 md:px-8 py-3">
+    <motion.nav className="min-h-[10vh] w-full bg-white text-black flex justify-between items-center shadow-md px-4 md:px-8 py-3"
+          initial="initial"
+        animate="animate"
+        variants={containerVariants}
+    >
       {/* Logo */}
       <div className="flex items-center">
         <Link to="/" className="flex items-center space-x-2">
@@ -113,6 +132,6 @@ export default function Navbar() {
           </div>
         </div>
       )}
-    </nav>
+    </motion.nav>
   );
 } 
