@@ -66,3 +66,26 @@ export const login = async (formData)=>{
     return null;
   }
 }
+
+export const logoutUser = async () =>{
+  try {
+    const token = sessionStorage.getItem("token") ||sessionStorage.getItem("Token")
+    const response = await axios.post(`${backendConnection()}/api/auth/logout`, {}, {
+      headers: {
+        'Authorization' : `Bearer ${token}`,
+        'Content-Type': 'applicaiton/json'
+      }
+    })    
+
+    if(response.status === 200){
+      showToast("success", response.data.message)
+      return response.data
+    }
+    else{
+      showToast('error', response.data.message)
+    }
+  } catch (error) {
+    console.error("Error: ", error.response.data.message)
+    showToast('error', error.reponse.data.message)
+  }
+}

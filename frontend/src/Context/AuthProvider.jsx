@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { getUser } from '../api/user.js';
+import { logoutUser } from '../api/Authentication/authentication.js';
 
 const AuthContext = createContext();
 
@@ -52,11 +53,25 @@ export const AuthProvider = ({ children }) => {
     setError(null);
   }, []);
 
-  const logout = useCallback(() => {
-    sessionStorage.removeItem('Token');
-    sessionStorage.removeItem('token');
-    setUser(null);
-    setError(null);
+  const logout = useCallback(async() => {  
+    try {
+      await logoutUser()
+    } catch (error) {
+      console.error("Logout failed!")
+    }
+    finally{
+      // Clear all storage items
+      sessionStorage.removeItem('Token');
+      sessionStorage.removeItem('token');
+      localStorage.removeItem('Token');
+      localStorage.removeItem('token');
+      
+      // Clear user state
+      setUser(null);
+      setError(null);
+      
+      console.log("User logged out successfully");
+    }
   }, []);
 
   const value = {
