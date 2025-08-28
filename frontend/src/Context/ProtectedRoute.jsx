@@ -1,36 +1,40 @@
-// components/ProtectedRoute.jsx
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../Context/AuthProvider';
+import { useAuth } from './AuthProvider';
 
-const ProtectedRoute = ({ children, allowedRoles = [] }) => {
+// Protected Route Component
+const ProtectedRoute = ({ children, requiredRole = null }) => {
   const { user, isLoading } = useAuth();
-  const role = user?.role?.toLowerCase();
   const location = useLocation();
 
   // Show loading state while checking authentication
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <span className="ml-3">Checking authentication...</span>
+      </div>
+    );
   }
 
-  useEffect(() => {
-    const timer = setTimeout(() => setShouldCheck(true), 100);
-    return () => clearTimeout(timer);
-  }, [])
-  
-  console.log("User: ", user)
-  console.log("Protected Route Role: ", role)
-  console.log("Rendered")
   // Redirect to login if not authenticated
   if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
-  if (!allowedRoles.map(r => r.toLowerCase()).includes(role)) {
+
+  // Check role-based access if requiredRole is specified
+  if (requiredRole && user.role !== requiredRole) {
     return <Navigate to="/unauthorized" replace />;
-    // console.log("Error: ", role)
   }
 
-
+  // If all checks pass, render the children
   return children;
 };
 
-export default ProtectedRoute;
+// Role-specific route components
+const AdminRoute = ({ children }) => <ProtectedRoute requiredRole="admin">{children}</ProtectedRoute>;
+const DoctorRoute = ({ children }) => <ProtectedRoute requiredRole="doctor">{children}</ProtectedRoute>;
+const NurseRoute = ({ children }) => <ProtectedRoute requiredRole="nurse">{children}</ProtectedRoute>;
+const StaffRoute = ({ children }) => <ProtectedRoute requiredRole="staff">{children}</ProtectedRoute>;
+const ReceptionistRoute = ({ children }) => <ProtectedRoute requiredRole="receptionist">{children}</ProtectedRoute>;
+
+export { AdminRoute, DoctorRoute, NurseRoute, ProtectedRoute, ReceptionistRoute, StaffRoute };

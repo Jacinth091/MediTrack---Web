@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-const AsideBar = ({ navItems,isAsideOpen, setAsideOpen }) => {
+const AsideBar = ({ navItems,isAsideOpen, setAsideOpen, userRole }) => {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
   const sidebarRef = useRef();
 
@@ -14,7 +14,7 @@ const AsideBar = ({ navItems,isAsideOpen, setAsideOpen }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
+  console.log(userRole)
   return (
     <>
       <AnimatePresence>
@@ -42,7 +42,7 @@ const AsideBar = ({ navItems,isAsideOpen, setAsideOpen }) => {
                   return (
                     <Link
                       key={index}
-                      to={item.path}
+                      to={`/${userRole}/${item.path}`}
                       className={`flex items-center py-3 px-4 rounded-lg transition-colors duration-300 `}
                     >
                       <i className={item.icon}></i>
