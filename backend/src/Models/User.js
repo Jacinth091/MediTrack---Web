@@ -96,6 +96,17 @@ userSchema.virtual('fullName').get(function() {
     : `${firstName} ${lastName}`;
 });
 
+userSchema.virtual('formattedDOB').get(function(){
+  if(!this.personalDetails.dateOfBirth) return null
+
+  return new Date(this.personalDetails.dateOfBirth).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'  
+  })
+
+})
+
 // Virtual for age calculation
 userSchema.virtual('age').get(function() {
   if (!this.personalDetails.dateOfBirth) return null;
