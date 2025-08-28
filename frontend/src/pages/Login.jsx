@@ -10,18 +10,19 @@ export default function Login() {
   const inputClasses = "w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-black";
   const sectionClasses = "space-y-4 p-4 bg-[#3A5E74] rounded-xl text-left";
 
-   const containerVariants = {
-    initial: { x: '-10vw', opacity: 0 }, 
-    animate: { 
-    x: 0, 
+ const containerVariants = {
+  initial: { x: '0vw', opacity: 0 },
+  animate: {
+    x: 0,
     opacity: 1,
     transition: {
-      type: 'tween', 
-      ease: [0.25, 0.1, 0.25, 1], 
-      duration: 0.8  
-      }
+      type: "tween",
+        ease: "linear", 
+      duration: 0.7,
+      delay: 0 // no delay
     }
-  };
+  }
+};
   const secondVariants = {
     initial: { x: '0', opacity: 0 }, 
     animate: { 
