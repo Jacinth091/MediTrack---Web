@@ -88,6 +88,34 @@ userSchema.index(
   }
 );
 
+// Virtual for full name
+userSchema.virtual('fullName').get(function() {
+  const { firstName, middleName, lastName } = this.personalDetails;
+  return middleName 
+    ? `${firstName} ${middleName} ${lastName}`
+    : `${firstName} ${lastName}`;
+});
+
+// Virtual for age calculation
+userSchema.virtual('age').get(function() {
+  if (!this.personalDetails.dateOfBirth) return null;
+  const today = new Date();
+  const birthDate = new Date(this.personalDetails.dateOfBirth);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
+});
+
+// Ensure virtuals are included in JSON output
+userSchema.set('toJSON', { virtuals: true });
+userSchema.set('toObject', { virtuals: true });
+
+
+
 const User = mongoose.model('User', userSchema);
 
 export default User;
