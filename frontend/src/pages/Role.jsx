@@ -83,48 +83,62 @@ const containerVariants = {
   );
 
   return (
-    <div>
-       <div className="flex flex-col items-center justify-center p-4">
-      <motion.h1
-        className="text-3xl font-bold text-gray-800 mb-2"
-        initial="initial"
-        animate="animate"
-        variants={secondVariants}
-      >
-        Choose your role to register
-      </motion.h1>
+    <div className="flex flex-col items-center justify-center min-h-[50vh]  px-4 ">
+        <div className="w-full  bg-white  rounded-2xl shadow-lg  md:p-5 border border-blue-100">
+          {/* Header Section */}
+          <motion.div
+            className="text-center mb-10"
+            initial="initial"
+            animate="animate"
+            variants={secondVariants}
+          >
+            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+              <i className="fas fa-user-md text-white text-2xl"></i>
+            </div>
+            <h1 className="text-3xl font-bold text-gray-800 mb-3">
+              Join <span className="bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">MediTrack</span>
+            </h1>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Select your role to begin your registration process
+            </p>
+          </motion.div>
 
-      <motion.p
-        className="text-gray-600 mb-8"
-        initial="initial"
-        animate="animate"
-        variants={containerVariants}
-      >
-        Select the role that best describes your position
-      </motion.p>
+          {/* Role Cards Grid */}
+          <motion.div
+            className="w-full grid grid-cols-1 sm:grid-cols-2  gap-5 mb-12"
+            initial="initial"
+            animate="animate"
+            variants={containerVariants}
+          >
+            {roles.map((role, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <RoleCard {...role} />
+              </motion.div>
+            ))}
+          </motion.div>
 
-      <motion.div
-        className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-        initial="initial"
-        animate="animate"
-        variants={secondVariants}
-      >
-        {roles.map((role, index) => (
-          <RoleCard key={index} {...role} />
-        ))}
-      </motion.div>
-
-      <motion.div
-        className="mt-12 text-center max-w-2xl"
-        initial="initial"
-        animate="animate"
-        variants={containerVariants}
-      >
-        <p className="text-gray-600">
-          Not sure which role to select? Contact your administrator for assistance.
-        </p>
-      </motion.div>
-    </div>
+          {/* Footer Section */}
+          <motion.div
+            className="text-center pt-6 border-t border-gray-100"
+            initial="initial"
+            animate="animate"
+            variants={secondVariants}
+          >
+            <div className="flex items-center justify-center text-gray-500 mb-3">
+              <i className="fas fa-question-circle mr-2 text-blue-400"></i>
+              <p className="text-sm">
+                Not sure which role to select?
+              </p>
+            </div>
+            <button className="text-sm text-blue-600  font-medium transition-colors flex items-center justify-center mx-auto">
+              Contact your administrator for assistance
+            </button>
+          </motion.div>
+        </div>
     </div>
   )
 }
