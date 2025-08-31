@@ -5,11 +5,16 @@ import InputField from '../components/InputField';
 import SelectField from '../components/SelectField';
 import Stepper, { Step } from '../components/Stepper';
 import { showToast } from '../utils/alertHelper';
+import Role from './Role';
+import HeartBeat from '../components/HeartBeat';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export default function SignUp() {
     const inputClasses = "w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-black";
     const sectionClasses = "space-y-4 p-4 bg-[#3A5E74] rounded-xl text-left";
     const [name, setName] = useState();
+    const [choose, setChoose] = useState(false);
 
 const containerVariants = {
   initial: { x: '0vw', opacity: 0 },
@@ -141,8 +146,83 @@ const containerVariants = {
   }, [])
 
   return (
-  <div className='flex flex-col justify-center items-center min-h-[85vh] text-black'>
-        <Stepper
+     <div className="w-full flex flex-col lg:flex-row justify-center items-center min-h-[85vh] px-4 py-8 ">
+         {/* Left Section - Welcome Content */}
+         <motion.div 
+           className="w-1/2 lg:w-1/2 flex flex-col justify-center items-center mb-10 lg:mb-0 lg:pr-10"
+           initial="initial"
+           animate="animate"
+           variants={secondVariants}
+         > 
+           <div className="w-full justify-center flex flex-col items-center">
+             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-lobster bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent text-center leading-tight mb-6">
+               Welcome Back to MediTrack 
+             </h1>
+             <p className="text-lg text-center text-gray-700 max-w-md mb-6">
+               Your personal health companion for tracking medications and wellness.
+             </p>
+             <div className="w-full flex items-center justify-center p-4 rounded-xl">
+               <HeartBeat />
+             </div>
+             
+             <div className="mt-8 grid grid-cols-2 gap-3 w-full">
+               <div className="flex items-center bg-blue-100 p-3 rounded-lg">
+                 <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center mr-2">
+                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                   </svg>
+                 </div>
+                 <span className="text-sm text-blue-700">Medication Reminders</span>
+               </div>
+               
+               <div className="flex items-center bg-teal-100 p-3 rounded-lg">
+                 <div className="w-8 h-8 rounded-full bg-teal-500 flex items-center justify-center mr-2">
+                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                   </svg>
+                 </div>
+                 <span className="text-sm text-teal-700">Health Tracking</span>
+               </div>
+               
+               <div className="flex items-center bg-purple-100 p-3 rounded-lg">
+                 <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center mr-2">
+                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                   </svg>
+                 </div>
+                 <span className="text-sm text-purple-700">Appointment Logs</span>
+               </div>
+               
+               <div className="flex items-center bg-rose-100 p-3 rounded-lg">
+                 <div className="w-8 h-8 rounded-full bg-rose-500 flex items-center justify-center mr-2">
+                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                   </svg>
+                 </div>
+                 <span className="text-sm text-rose-700">Health Reports</span>
+               </div>
+             </div>
+           </div>
+         </motion.div>
+   
+   
+         {/* Mobile Divider */}
+         <div className="w-4/5 h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent my-8 lg:hidden"></div>
+   
+
+      {/* Right Section - Login Form */}
+   
+   <div className='w-1/2'>
+      {!choose &&(
+            <button
+            onClick={() => setChoose(true)}
+            >
+              <Role/>
+            </button>
+        )}
+        {choose &&(
+          
+          <Stepper
           initialStep={1}
           onStepChange={(step) => {
             console.log(step);
@@ -151,11 +231,7 @@ const containerVariants = {
           backButtonText="Previous"
           nextButtonText="Next"
         >
-          <Step>
-            <h2>Welcome to the registration!</h2>
-            <p>Please fill out the following information to create your account.</p>
-          </Step>
-          
+      
           <Step>
             <div>
               <InputField 
@@ -308,6 +384,14 @@ const containerVariants = {
           </Step>
           </form>
         </Stepper>
+
+        )
+        
+        }
+        </div>
     </div>
+      
+
+
   )
 }
