@@ -9,7 +9,7 @@ export default {
       fontFamily: {
         sans: ["Poppins", "sans-serif"],  // Default sans-serif
         lobster: ["Lobster", "cursive"],
-        "dancing-script": ["Dancing Script", "cursive"],
+        cursive: ['"Dancing Script"', 'cursive'],
       },
     },
   },

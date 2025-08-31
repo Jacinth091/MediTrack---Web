@@ -7,6 +7,8 @@
 /* Apply Poppins globally */
 body {
   font-family: 'Poppins', sans-serif;
+    background-image: linear-gradient(to bottom right, #eff6ff, #f0fdfa);
+    /* margin-left: 20px; */
 }
 .darkveil-canvas {
   width: 100%;

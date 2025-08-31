@@ -56,7 +56,7 @@ export default function Stepper({
       {...rest}
     >
       <div
-        className={`mx-auto w-full max-w-md rounded-4xl shadow-xl ${stepCircleContainerClassName}`}
+        className={`mx-auto w-full min-h-[60vh] max-w-md rounded-4xl shadow-xl flex flex-col ${stepCircleContainerClassName}`}
         style={{ border: "1px solid #222" }}
       >
         <div className={`${stepContainerClassName} flex w-full items-center p-8`}>
@@ -96,20 +96,20 @@ export default function Stepper({
           isCompleted={isCompleted}
           currentStep={currentStep}
           direction={direction}
-          className={`space-y-2 px-8 ${contentClassName}`}
+          className={`space-y-2 px-8 flex-1 ${contentClassName}`}
         >
           {stepsArray[currentStep - 1]}
         </StepContentWrapper>
         {!isCompleted && (
-          <div className={`px-8 pb-8 ${footerClassName}`}>
+          <div className={` px-8 pb- ${footerClassName}`}>
             <div
-              className={`mt-10 flex ${currentStep !== 1 ? "justify-between" : "justify-end"
+              className={`mb-5 flex ${currentStep !== 1 ? "justify-between" : "justify-end"
                 }`}
             >
               {currentStep !== 1 && (
                 <button
                   onClick={handleBack}
-                  className={`duration-350 rounded px-2 py-1 transition ${currentStep === 1
+                  className={`duration-350 rounded-sm cursor-pointer px-2 py-1 transition ${currentStep === 1
                     ? "pointer-events-none opacity-50 text-neutral-400"
                     : "text-neutral-400 hover:text-neutral-700"
                     }`}
@@ -120,7 +120,7 @@ export default function Stepper({
               )}
               <button
                 onClick={isLastStep ? handleComplete : handleNext}
-                className="duration-350 flex items-center justify-center rounded-full bg-green-500 py-1.5 px-3.5 font-medium tracking-tight text-white transition hover:bg-green-600 active:bg-green-700"
+                className="duration-350 flex items-center justify-center rounded-xl cursor-pointer   bg-green-500 py-1.5 px-3.5 font-medium tracking-tight text-white transition hover:bg-green-600 active:bg-green-700"
                 {...nextButtonProps}
               >
                 {isLastStep ? "Complete" : nextButtonText}
