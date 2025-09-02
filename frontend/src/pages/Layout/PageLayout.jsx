@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "../../Context/AuthProvider";
 import NavItemsConfig from "../../utils/NavItemsConfig.js";
-import AsideBar from "./AsideBar";
+import AsideBar from "./AsideBar.jsx";
 
 const PageLayout = () => {
   const [isAsideOpen, setAsideOpen] = useState(true);
@@ -29,6 +29,12 @@ const PageLayout = () => {
         setAsideOpen={setAsideOpen}
         userRole={user?.role.toLowerCase()}
       />
+      {/* <Sidebar
+        navItems={navItems}
+        isAsideOpen={isAsideOpen}
+        setAsideOpen={setAsideOpen}
+        userRole = {user?.role?.toLowerCase()}
+      /> */}
       <main className="flex-1 lg:ml-60 min-h-screen px-6 py-4 bg-gray-100">
         <Outlet />
       </main>
