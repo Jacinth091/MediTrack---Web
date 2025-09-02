@@ -103,7 +103,7 @@ const containerVariants = {
         dateOfBirth: formData.dateOfBirth,
         gender: parsedGender,
         contactNumber: formData.contactNumber,
-        licenseNo: formData.licenseNo | '',
+        licenseNo: formData.licenseNo,
         department: formData.department,
         role: parsedRole,
       })
