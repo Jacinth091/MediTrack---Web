@@ -27,7 +27,7 @@ export const getUser = async () => {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
-      timeout: 10000,
+      timeout: 50000,
       validateStatus: (status) => status < 500 // Don't throw for 4xx errors
     });
 
