@@ -11,17 +11,17 @@ const NavItemsConfig = () => {
 
     doctor: [
       { text: "Dashboard", icon: "fas fa-tachometer-alt", path: "dashboard" },
+      { text: "Appointments", icon: "fas fa-calendar-check", path: "appointments" },
       { text: "Patients", icon: "fas fa-user-injured", path: "patients" },
       { text: "Records", icon: "fas fa-notes-medical", path: "records" },
-      { text: "Appointments", icon: "fas fa-calendar-check", path: "appointments" },
       { text: "Prescriptions", icon: "fas fa-file-prescription", path: "prescriptions" },
     ],
 
     nurse: [
       { text: "Dashboard", icon: "fas fa-tachometer-alt", path: "dashboard" },
+      { text: "Appointments", icon: "fas fa-calendar-alt", path: "appointments" },
       { text: "Patients", icon: "fas fa-user-injured", path: "patients" },
       { text: "Records", icon: "fas fa-notes-medical", path: "records" },
-      { text: "Appointments", icon: "fas fa-calendar-alt", path: "appointments" },
     ],
 
     staff: [
@@ -33,6 +33,7 @@ const NavItemsConfig = () => {
 
     receptionist: [
       { text: "Dashboard", icon: "fas fa-tachometer-alt", path: "dashboard" },
+      { text: "Appointments", icon: "fas fa-calendar-alt", path: "appointments" },
       { text: "Patients", icon: "fas fa-user-injured", path: "patients" },
       { text: "Records", icon: "fas fa-notes-medical", path: "records" },
       { text: "Add Patient", icon: "fas fa-user-plus", path: "add-patient" },
