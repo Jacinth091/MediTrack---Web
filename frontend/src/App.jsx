@@ -21,9 +21,13 @@ import PageLayout from './pages/Layout/PageLayout';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import AdminPanel from './pages/Roles/Admin/AdminPanel';
+import AppointmentsPanel from './pages/Roles/AppointmentsPanel';
 import DoctorPanel from './pages/Roles/Doctor/DoctorPanel';
-import NursePanel from './pages/Roles/Nurse/NursePanel';
+import NurseDashboard from './pages/Roles/Nurse/NursePanel';
+import Patients from './pages/Roles/Patients';
+import PatientsPanel from './pages/Roles/PatientsPanel';
 import ReceptionistPanel from './pages/Roles/Receptionist/ReceptionistPanel';
+import RecordsPanel from './pages/Roles/RecordsPanel';
 import StaffDashboard from './pages/Roles/Staff/StaffPanel';
 import SignUp from './pages/SignUp';
 import Unauthorized from './pages/Unauthorized';
@@ -40,6 +44,7 @@ function App() {
           <Route path="/signup" element = {<SignUp/>}></Route>
         </Route>
         
+        {/* ADMIN ROUTES */}
         <Route path='/admin/' element={
           <ProtectedRoute>
             <PageLayout/>
@@ -77,6 +82,8 @@ function App() {
           }></Route>
         </Route>
 
+
+        {/* DOCTOR ROUTES */}
         <Route path='/doctor/' element={
           <ProtectedRoute>
             <PageLayout/>
@@ -89,17 +96,17 @@ function App() {
           }/>
           <Route path="patients" element={
             <DoctorRoute>
-              <div>Patients</div>
+              <PatientsPanel/>
             </DoctorRoute>
           }/>
           <Route path="records" element={
             <DoctorRoute>
-              <div>Records</div>
+              <RecordsPanel/>
             </DoctorRoute>
           }/>
           <Route path="appointments" element={
             <DoctorRoute>
-              <div>Appointments</div>
+              <AppointmentsPanel/>
             </DoctorRoute>
           }/>
           <Route path="prescriptions" element={
@@ -109,6 +116,7 @@ function App() {
           }/>
         </Route>
         
+        {/* NURSE ROUTES */}
         <Route path='/nurse/' element={
           <ProtectedRoute>
             <PageLayout/>
@@ -116,26 +124,28 @@ function App() {
         }>
           <Route path="dashboard" element = {
             <NurseRoute>
-              <NursePanel/>
-            </NurseRoute>
-          }/>
-          <Route path="patients" element={
-            <NurseRoute>
-              <div>Patients</div>
-            </NurseRoute>
-          }/>
-          <Route path="records" element={
-            <NurseRoute>
-              <div>Records</div>
+              <NurseDashboard/>
             </NurseRoute>
           }/>                
           <Route path="appointments" element={
             <NurseRoute>
-              <div>Appointments</div>
+              <AppointmentsPanel/>
+            </NurseRoute>
+          }/>
+          <Route path="patients" element={
+            <NurseRoute>
+              {/* <PatientsPanel/> */}
+              <Patients/>
+            </NurseRoute>
+          }/>
+          <Route path="records" element={
+            <NurseRoute>
+              <RecordsPanel/>
             </NurseRoute>
           }/>
         </Route>
         
+        {/* STAFF ROUTES */}
         <Route path='/staff/' element={
           <ProtectedRoute>
             <PageLayout/>
@@ -148,19 +158,19 @@ function App() {
           }/>                
           <Route path="patients/" element={
             <StaffRoute>
-              <div>Patients</div>
+              <PatientsPanel/>
             </StaffRoute>
           }/>
           <Route path="records" element={
             <StaffRoute>
-              <div>Records</div>
+              <RecordsPanel/>
             </StaffRoute>
           }/>                 
           <Route path="inventory" element={
             <StaffRoute>
               <div>Inventory</div>
             </StaffRoute>
-          }/>                
+          }/>                 
         </Route>
         
         <Route path='/receptionist/' element={
@@ -173,14 +183,19 @@ function App() {
               <ReceptionistPanel/>
             </ReceptionistRoute>
           }/>
+          <Route path="appointments/" element = {
+            <ReceptionistRoute>
+              <AppointmentsPanel/>
+            </ReceptionistRoute>
+          }/>
           <Route path="patients/" element={
             <ReceptionistRoute>
-              <div>Patients</div>
+              <PatientsPanel/>
             </ReceptionistRoute>
           }/>
           <Route path="records/" element={
             <ReceptionistRoute>
-              <div>Records</div>
+              <RecordsPanel/>
             </ReceptionistRoute>
           }/>
           <Route path="add-patient" element ={
