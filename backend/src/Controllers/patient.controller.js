@@ -1,23 +1,6 @@
 import Patient from '../Models/Patient.js';
 
-export const createPatient = async(req,res) =>{
-  console.log('=== DEBUGGING START ===');
-  console.log('1. Raw req.body:', req.body);
-  console.log('2. Type of req.body:', typeof req.body);
-  console.log('3. req.body exists:', !!req.body);
-  console.log('4. Object.keys(req.body):', Object.keys(req.body || {}));
-  console.log('5. firstName directly:', req.body.firstName);
-  console.log('6. lastName directly:', req.body.lastName);
-  console.log('7. address directly:', req.body.address);
-  console.log('8. address exists:', !!req.body.address);
-  if (req.body.address) {
-    console.log('9. address.city:', req.body.address.city);
-    console.log('10. address.province:', req.body.address.province);
-  }
-  console.log('=== DEBUGGING END ===');
-
-
-
+export const addPatient = async(req,res) =>{
   const {
     firstName,
     lastName,
@@ -195,7 +178,8 @@ export const createPatient = async(req,res) =>{
 
 
 export const getAllPatients = async(req, res) => {
-  // res.status(200).json({"message": "All patients data retrieved successfully!"});
+  
+  
 };
 
 export const getPatientById = async(req,res) =>{

@@ -36,7 +36,7 @@ export const registerUser = async(req, res) => {
     }
 
     // Checks the license number if it is null if the role is doctor or nurse
-    if((role ==="doctor" || role === "nurse") && !licenseNo?.trim()){
+    if((role ==="doctor" || role === "nurse") && !licenseNo.trim()){
       return res.status(400).json({message: "License No Field is Missing!"});
     }
     
