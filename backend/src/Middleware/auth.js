@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import User from '../Models/User.js';
 
-const auth = async (req,res, next) => {
+export const auth = async (req,res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
@@ -59,4 +59,18 @@ const auth = async (req,res, next) => {
   }
 }
 
-export default auth;
+
+export const requiredRole = (roles) =>{
+  return (res,req,next)=>{
+    if(!roles.includes(req.user?.role)){
+      return res.status(403).json({
+        success: false,
+        message: 'Unauthorized Role for this Operation!'
+      })
+    }
+    next();
+  }
+}
+
+
+// export default auth;
